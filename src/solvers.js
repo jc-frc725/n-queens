@@ -13,7 +13,10 @@
 
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n rooks placed such that none of them can attack each other
 
-
+// I: number
+// O: a string that adds our input number 'n' in the middle and adds a stringified version of our solution variable at the end
+// C: 'n'x'n' board
+// E: if passed anything other than number, if passed 0, if passed a number larger than number of possible solutions???
 
 window.findNRooksSolution = function(n) {
   var solution = undefined; //fixme
