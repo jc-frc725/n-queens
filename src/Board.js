@@ -62,7 +62,7 @@
     },
 
 
-/*
+    /*
          _             _     _
      ___| |_ __ _ _ __| |_  | |__   ___ _ __ ___ _
     / __| __/ _` | '__| __| | '_ \ / _ \ '__/ _ (_)
@@ -80,7 +80,6 @@
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
       var row = this.get(rowIndex);
-      console.log(row);
       var counter = 0;
       for (var i = 0; i < row.length; i++) {
         if (row[i]) {
@@ -138,11 +137,52 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+      // set our board
+      var board = this.rows();
+      // set our column to ???
+      var column = majorDiagonalColumnIndexAtFirstRow;
+      // console.log(column);
+      // set our row to 0
+      var row = 0;
+
+      // set a counter
+      var counter = 0;
+      // while (column < 0) {
+      //   column++;
+      //   row++;
+      // }
+      // console.log(column);
+      // console.log(row);
+      // we can use a WHILE loop with the '_isInBounds' function above to determine if both 'col' and 'row' are a valid range;
+      // console.log(this._isInBounds(1, 2));
+      while (column <= board.length) { // <-------- FIX ME
+        // IF our current 'row' and 'col' location has a queen, then increment 'counter
+        // console.log(board[row][column])
+        if (board[row][column]) {
+          counter++;
+        }
+        // then increment our 'row' and 'col'
+        row++;
+        column++;
+      }
+      // console.log(column);
+      // console.log(row);
+      // return true or false
+
+      // might also be able to incorporate '_getFirstRowColumnIndexForMajorDiagonalOn' function from above and not have to keep track of our 'row' and 'col' -- not sure about how to make this work yet
+
+      return counter > 1; // fixme
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
+
+      var board = this.rows();
+      for (var i = 0; i < board.length; i++) {
+        if (this.hasMajorDiagonalConflictAt(i)) {
+          return true;
+        }
+      }
       return false; // fixme
     },
 
@@ -153,6 +193,8 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
+      // Mirror 'hasMajorDiagonalConflictAt'
+
       return false; // fixme
     },
 

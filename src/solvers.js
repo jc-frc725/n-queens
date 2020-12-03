@@ -19,7 +19,7 @@
 // E: if passed anything other than number, if passed 0, if passed a number larger than number of possible solutions???
 
 window.findNRooksSolution = function(n) {
-  var solution = undefined; //fixme
+  var solution = new Board({n: n}); //fixme
 
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
   return solution;
