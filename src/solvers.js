@@ -41,13 +41,32 @@ window.findNRooksSolution = function(n) {
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
   return solution.rows();
 };
+/////////////////////////////////////////////////////////////////////////////////////
+
+// I: is a number, which we need to use to create a 'new Board' that we can work with
+// O: Number of solutions
+// C:
+// E: what if passed 0, what if passed 1
 
 // return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
 window.countNRooksSolutions = function(n) {
 
-  var newBoard = new Board({n: n});
-  var solutionCount = 0;
+  // var newBoard = new Board({n: n});
+  // var solutionCount = 0;
 
+  // Create factorial helper function which will help us recursively repeat our function until 'n' becomes 1
+  var factorial = function(n) {
+    var nextN = n - 1;
+    // Base case
+    if (n === 1 || n === 0) {
+      return n; // return 1;
+    }
+    return n * factorial(nextN);
+  };
+  var solutionCount = factorial(n);
+  // console.log(factorial(5));
+
+  // we will need to iterate over
 
 
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
