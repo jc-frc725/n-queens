@@ -166,9 +166,16 @@
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
+      // var board = this.rows();
+      // for (var i = 2 - this.get('n'); i <= this.get('n') - 2; i++) {
+      //   if (this.hasMajorDiagonalConflictAt(i)) {
+      //     return true;
+      //   }
+      // }
+      // return false; // fixme
+
       var board = this.rows();
-      console.log(2 - this.get('n'));
-      for (var i = 2 - this.get('n'); i <= this.get('n') - 2; i++) {
+      for (var i = 0; i < board.length; i++) {
         if (this.hasMajorDiagonalConflictAt(i)) {
           return true;
         }
