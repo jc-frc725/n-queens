@@ -137,46 +137,35 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      // set our board
       var board = this.rows();
-      // set our column to ???
-      var column = majorDiagonalColumnIndexAtFirstRow;
-      // console.log(column);
-      // set our row to 0
-      var row = 0;
-
-      // set a counter
       var counter = 0;
-      while (column < 0) {
-        column++;
-        row++;
-      }
-      // console.log(column);
-      // console.log(row);
-      // we can use a WHILE loop with the '_isInBounds' function above to determine if both 'col' and 'row' are a valid range;
-      // console.log(this._isInBounds(1, 2));
-      while (this._isInBounds(row, column)) {
-        // IF our current 'row' and 'col' location has a queen, then increment 'counter
-        // console.log(board[row][column])
-        if (board[row][column]) {
-          counter++;
+
+      for (let i = 0; i < this.get('n'); i++) {
+        var column = i;
+        var row = majorDiagonalColumnIndexAtFirstRow;
+
+        while (this._isInBounds(row, column)) {
+          //console.log(`row: ${row}, column: ${column}`);
+          if (board[row][column]) {
+            counter++;
+          }
+          if (counter > 1) {
+            return true;
+          }
+          row++;
+          column++;
         }
-        // then increment our 'row' and 'col'
-        row++;
-        column++;
+        counter = 0;
       }
-      // console.log(column);
-      // console.log(row);
-      // return true or false
 
-      // might also be able to incorporate '_getFirstRowColumnIndexForMajorDiagonalOn' function from above and not have to keep track of our 'row' and 'col' -- not sure about how to make this work yet
+      // +1 to 1stRowColIndex after parsing a diagonal
+      // need to save position of starting row
 
-      return counter > 1; // fixme
+      return false; // fixme
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
-
       var board = this.rows();
       console.log(2 - this.get('n'));
       for (var i = 2 - this.get('n'); i <= this.get('n') - 2; i++) {
@@ -195,48 +184,37 @@
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
       // Mirror 'hasMajorDiagonalConflictAt'
-      // set our board
+      // minor diagonal pattern:
+      // if major starts from top left (array[0]) - bot right (array[end]),
+      // minor is top right (array[end]) - bot left (array[0])
+
       var board = this.rows();
-      // set our column to ???
-      var column = minorDiagonalColumnIndexAtFirstRow;
-      // console.log(column);
-      // set our row to 0
-      var row = 0;
-
-      // set a counter
       var counter = 0;
-      while (column < 0) {
-        column++;
-        row++;
-      }
-      // console.log(column);
-      // console.log(row);
-      // we can use a WHILE loop with the '_isInBounds' function above to determine if both 'col' and 'row' are a valid range;
-      // console.log(this._isInBounds(1, 2));
-      while (this._isInBounds(row, column)) {
-        // IF our current 'row' and 'col' location has a queen, then increment 'counter
-        // console.log(board[row][column])
-        if (board[row][column]) {
-          counter++;
+
+      for (let i = this.get('n'); i >= 0; i--) {
+        var row = minorDiagonalColumnIndexAtFirstRow;
+        var column = i;
+
+        while (this._isInBounds(row, column)) {
+          //console.log(`row: ${row} col: ${column}`);
+          if (board[row][column]) {
+            counter++;
+          }
+          if (counter > 1) {
+            return true;
+          }
+          row++;
+          column--;
         }
-        // then increment our 'row' and 'col'
-        row++;
-        column++;
+        counter = 0;
       }
-      // console.log(column);
-      // console.log(row);
-      // return true or false
-
-      // might also be able to incorporate '_getFirstRowColumnIndexForMajorDiagonalOn' function from above and not have to keep track of our 'row' and 'col' -- not sure about how to make this work yet
-
-      return counter > 1; // fixme
+      return false; // fixme
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
       var board = this.rows();
-      console.log(2 - this.get('n'));
-      for (var i = 2 - this.get('n'); i <= this.get('n') - 2; i++) {
+      for (var i = 0; i < board.length; i++) {
         if (this.hasMinorDiagonalConflictAt(i)) {
           return true;
         }
