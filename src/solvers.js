@@ -23,16 +23,10 @@ window.findNRooksSolution = function(n) {
 
   // loop over 'n'
   //
-  for (var i = 0; i < n; i++) {
-    // for (var j = 0; j < n; j++) {
-    //  // place a piece
-    //  // check if rook conflict exists
-    //  // if so, remove piece
-    //  // if not, move onto next board place
-    solution.togglePiece(i, i);
-
-    // }
-  }
+  // for (var i = 0; i < n; i++) {
+  //   for (var j = 0; j < n; j++) {
+  //   }
+  // }
   // toggle pieces on solution on each iteration - make row and column indexs i and j
   // solution.toggle(i, j) <-- only called n times
   //
@@ -44,11 +38,33 @@ window.findNRooksSolution = function(n) {
 
 // return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
 window.countNRooksSolutions = function(n) {
-
   var newBoard = new Board({n: n});
   var solutionCount = 0;
+  var countNRooksHelper = function(row) {
+    // if reached last row in this iteration of helper,
+    // n should equal # of pieces placed | row is equal to n
+    if (row === n) {
+      // increment solutionCount
+      solutionCount++;
+      // go back up
+      return;
+    }
 
-
+    // with board of n size, go over each row
+    for (let i = 0; i < n; i++) {
+      // place a piece
+      newBoard.togglePiece(row, i);
+      // check if board has no conflicts after placing piece
+      // if so, recurse
+      if (!newBoard.hasAnyRooksConflicts()) {
+        // recursive into remaining problem
+        countNRooksHelper(row + 1);
+      }
+      // unplace piece
+      newBoard.togglePiece(row, i);
+    }
+  };
+  countNRooksHelper(0);
 
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
   return solutionCount;
@@ -64,7 +80,37 @@ window.findNQueensSolution = function(n) {
 
 // return the number of nxn chessboards that exist, with n queens placed such that none of them can attack each other
 window.countNQueensSolutions = function(n) {
-  var solutionCount = undefined; //fixme
+  var solutionCount = 0; //fixme
+  var newBoard = new Board({n: n});
+
+  var countNQueensHelper = function(row) {
+
+    // if reached last row in this iteration of helper,
+    // n should equal # of pieces placed | row is equal to n
+    if (row === n) {
+      // increment solutionCount
+      solutionCount++;
+      // go back up
+      return;
+    }
+
+    // with board of n size, go over each row
+    for (let i = 0; i < n; i++) {
+      // place a piece
+      newBoard.togglePiece(row, i);
+      // check if board has no conflicts after placing piece
+      // if so, recurse
+      if (!newBoard.hasAnyQueensConflicts()) {
+        // recursive into remaining problem
+        countNQueensHelper(row + 1);
+      }
+
+      // unplace piece
+      newBoard.togglePiece(row, i);
+
+    }
+  };
+  countNQueensHelper(0);
 
   console.log('Number of solutions for ' + n + ' queens:', solutionCount);
   return solutionCount;
